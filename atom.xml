@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://wlaqtd.github.io</id>
     <title>实战派paper</title>
-    <updated>2020-03-10T04:56:11.643Z</updated>
+    <updated>2020-03-22T11:53:47.090Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://wlaqtd.github.io"/>
     <link rel="self" href="https://wlaqtd.github.io/atom.xml"/>
@@ -10,6 +10,455 @@
     <logo>https://wlaqtd.github.io/images/avatar.png</logo>
     <icon>https://wlaqtd.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, 实战派paper</rights>
+    <entry>
+        <title type="html"><![CDATA[shodan API接口下的渗透测试]]></title>
+        <id>https://wlaqtd.github.io/post/shodan-api-jie-kou-xia-de-shen-tou-ce-shi/</id>
+        <link href="https://wlaqtd.github.io/post/shodan-api-jie-kou-xia-de-shen-tou-ce-shi/">
+        </link>
+        <updated>2020-03-22T11:07:54.000Z</updated>
+        <content type="html"><![CDATA[<p>🤡<br>
+Shodan：是世界上第一个针对Internet连接设备的搜索引擎。了解互联网情报如何帮助您做出更好的决策（来自官方）。</p>
+<p>在渗透测试领域：目标基本信息，列如：端口开放，指纹识别等......掌握目标基本信息越多成功率越高。而现在越来越多的安全人员不是像以前一样去google hacker 去找目标，而是通过类似于：shodan、zoomeye、fofa、censys、等平台提供的数据进行,合法的脆弱目标检测统计或者大规模非法的攻击行动。</p>
+<p>shodan基础 API 预览</p>
+<table>
+<thead>
+<tr>
+<th>ID</th>
+<th>API名称</th>
+<th>功能</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>Shodan搜索方法</td>
+<td>查询ip基础信息,banner等...</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Shodan按需扫描</td>
+<td>根据支持的协议去自定义扫描目标</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Shodan网络警报</td>
+<td>自定义监控目标主机开放的信息</td>
+</tr>
+<tr>
+<td>4</td>
+<td>通知者</td>
+<td>创建的服务会通过邮箱提醒</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Shodan目录方法</td>
+<td>历史查询记录</td>
+</tr>
+<tr>
+<td>6</td>
+<td>Shodan批量数据企业</td>
+<td>下载数据集列表</td>
+</tr>
+<tr>
+<td>7</td>
+<td>管理组织</td>
+<td>组织用于管理子账号权限等</td>
+</tr>
+<tr>
+<td>8</td>
+<td>账户方式</td>
+<td>个人资料,查询自己账户权限</td>
+</tr>
+<tr>
+<td>9</td>
+<td>DNS方法</td>
+<td>获取域名下的子域名,dns等信息</td>
+</tr>
+<tr>
+<td>10</td>
+<td>实用方法</td>
+<td>小工具,获取自己IP信息等</td>
+</tr>
+<tr>
+<td>11</td>
+<td>API状态方法</td>
+<td>检查API状态</td>
+</tr>
+<tr>
+<td>12</td>
+<td>shodan利用方法</td>
+<td>历史漏洞查询</td>
+</tr>
+<tr>
+<td>13</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>14</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>15</td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<hr>
+<p>Shodan提供python 模块,可以根据目标环境自定义选择搭建需要的负载.</p>
+<p>Github项目地址：https://github.com/achillean/shodan-python</p>
+<p>安装好python3, pip install shodan</p>
+<p>就可以安装shodan3模块,进入python Scripts 目录 就发现有shodan命令行程序,shodan.exe.通过实例演示shodan api的部分功能,需要注册账号获取KEY值,部分功能可能需要充值权限.</p>
+<pre><code class="language-python">C:\Program Files (x86)\Microsoft Visual Studio\Shared\Python37_64\Scripts&gt;shodan.exe
+Usage: shodan [OPTIONS] COMMAND [ARGS]...
+
+Options:
+  -h, --help  Show this message and exit.
+
+Commands:
+  alert       Manage the network alerts for your account
+  convert     Convert the given input data file into a different format.
+  count       Returns the number of results for a search
+  data        Bulk data access to Shodan
+  domain      View all available information for a domain
+  download    Download search results and save them in a compressed JSON...
+  honeyscore  Check whether the IP is a honeypot or not.
+  host        View all available information for an IP address
+  info        Shows general information about your account
+  init        Initialize the Shodan command-line
+  myip        Print your external IP address
+  org         Manage your organization's access to Shodan
+  parse       Extract information out of compressed JSON files.
+  radar       Real-Time Map of some results as Shodan finds them.
+  scan        Scan an IP/ netblock using Shodan.
+  search      Search the Shodan database
+  stats       Provide summary information about a search query
+  stream      Stream data in real-time.
+  version     Print version of this tool.
+
+C:\Program Files (x86)\Microsoft Visual Studio\Shared\Python37_64\Scripts&gt;
+</code></pre>
+<pre><code class="language-python">C:\Program Files (x86)\Microsoft Visual Studio\Shared\Python37_64\Scripts&gt;shodan honeyscore 111.73.46.80
+Not a honeypot
+Score: 0.3
+
+honeyscore选项检查目标IP是否为蜜罐.
+</code></pre>
+<pre><code class="language-python">C:\Program Files (x86)\Microsoft Visual Studio\Shared\Python37_64\Scripts&gt;shodan host 111.73.46.80
+111.73.46.80
+City:                    Jiujiang
+Country:                 China
+Organization:            China Telecom
+Updated:                 2020-03-15T04:17:36.134179
+Number of open ports:    6
+Vulnerabilities:         CVE-2018-15919 CVE-2017-15906
+
+Ports:
+     22/tcp OpenSSH (7.4)
+     80/tcp nginx
+   3306/tcp
+   8888/tcp
+  12345/tcp
+  33060/tcp
+
+
+查询host目标基础信息：显示Vulnerabilities：可能存在的脆弱点.给出了漏洞编号.
+
+</code></pre>
+<pre><code class="language-python">root@greekn:~# shodan search weblogic
+52.60.71.54     8413    ec2-52-60-71-54.ca-central-1.compute.amazonaws.com      HTTP/1.1 302 Found\r\nDate: Sat, 21 Mar 2020 03:12:42 GMT\r\nX-Powered-By: Servlet/2.4\r\nServer: WebLogic Server 8.1 SP3 Tue Jun 29 23:11:19 PDT 2004 404973\r\nLocation: http://67.234.9.136:8413/\r\nContent-Length: 0\r\n\r\n       
+13.210.240.147  5592    ec2-13-210-240-147.ap-southeast-2.compute.amazonaws.com HTTP/1.1 302 Found\r\nDate: Sat, 21 Mar 2020 05:10:11 GMT\r\nX-Powered-By: PHP/5.3.6-13ubuntu3.6\r\nServer: WebLogic Server 7.0 SP4 Tue Aug 12 11:22:26 PDT 2003\r\nLocation: http://126.41.113.220:5592/\r\nContent-Length: 0\r\n\r\n  
+46.244.23.159   5357    159-23-244-46.a2b-internet.com  HTTP/1.1 200 OK\r\nDate: Sat, 21 Mar 2020 06:50:30 GMT\r\nServer: WebLogic Server 8.1 SP3\r\nLast-Modified: Sat, 04 Jan 2020 18:57:06 GMT\r\nETag: &quot;0-59b54fe19ec75&quot;\r\nAccept-Ranges: bytes\r\nContent-Length: 0\r\nContent-Type: text/html\r\n\r\n    
+210.65.76.28    80      210-65-76-28.HINET-IP.hinet.net HTTP/1.1 200 OK\r\nDate: Sat, 21 Mar 2020 02:43:24 GMT\r\nServer: WebLogic Server 8.1 SP3 Tue Jun 29 23:11:19 PDT 2004 404973 \r\nContent-Length: 16040\r\nContent-Type: text/html\r\nLast-Modified: Thu, 10 Jan 2019 01:55:48 GMT\r\nAccept-Ranges: bytes\r\n\r\n      
+
+随机获取一些带有weblogic中间件banner的ip,因为返回的banner信息太多就选择了几个.
+
+</code></pre>
+<pre><code class="language-python">root@greekn:~# python3 shodan-exp-search.py -s weblogic -k zwwxzOzSh4IfTEecNSyR2hzdvQusZpM7
+
+
+  ██████  ██░ ██  ▒█████  ▓█████▄  ▄▄▄       ███▄    █ ▓█████ ▒██   ██▒ ██▓███    ██████ ▓█████ ▄▄▄       ██▀███   ▄████▄   ██░ ██ 
+▒██    ▒ ▓██░ ██▒▒██▒  ██▒▒██▀ ██▌▒████▄     ██ ▀█   █ ▓█   ▀ ▒▒ █ █ ▒░▓██░  ██▒▒██    ▒ ▓█   ▀▒████▄    ▓██ ▒ ██▒▒██▀ ▀█  ▓██░ ██▒
+░ ▓██▄   ▒██▀▀██░▒██░  ██▒░██   █▌▒██  ▀█▄  ▓██  ▀█ ██▒▒███   ░░  █   ░▓██░ ██▓▒░ ▓██▄   ▒███  ▒██  ▀█▄  ▓██ ░▄█ ▒▒▓█    ▄ ▒██▀▀██░
+  ▒   ██▒░▓█ ░██ ▒██   ██░░▓█▄   ▌░██▄▄▄▄██ ▓██▒  ▐▌██▒▒▓█  ▄  ░ █ █ ▒ ▒██▄█▓▒ ▒  ▒   ██▒▒▓█  ▄░██▄▄▄▄██ ▒██▀▀█▄  ▒▓▓▄ ▄██▒░▓█ ░██ 
+▒██████▒▒░▓█▒░██▓░ ████▓▒░░▒████▓  ▓█   ▓██▒▒██░   ▓██░░▒████▒▒██▒ ▒██▒▒██▒ ░  ░▒██████▒▒░▒████▒▓█   ▓██▒░██▓ ▒██▒▒ ▓███▀ ░░▓█▒░██▓
+▒ ▒▓▒ ▒ ░ ▒ ░░▒░▒░ ▒░▒░▒░  ▒▒▓  ▒  ▒▒   ▓▒█░░ ▒░   ▒ ▒ ░░ ▒░ ░▒▒ ░ ░▓ ░▒▓▒░ ░  ░▒ ▒▓▒ ▒ ░░░ ▒░ ░▒▒   ▓▒█░░ ▒▓ ░▒▓░░ ░▒ ▒  ░ ▒ ░░▒░▒
+░ ░▒  ░ ░ ▒ ░▒░ ░  ░ ▒ ▒░  ░ ▒  ▒   ▒   ▒▒ ░░ ░░   ░ ▒░ ░ ░  ░░░   ░▒ ░░▒ ░     ░ ░▒  ░ ░ ░ ░  ░ ▒   ▒▒ ░  ░▒ ░ ▒░  ░  ▒    ▒ ░▒░ ░
+░  ░  ░   ░  ░░ ░░ ░ ░ ▒   ░ ░  ░   ░   ▒      ░   ░ ░    ░    ░    ░  ░░       ░  ░  ░     ░    ░   ▒     ░░   ░ ░         ░  ░░ ░
+      ░   ░  ░  ░    ░ ░     ░          ░  ░         ░    ░  ░ ░    ░                 ░     ░  ░     ░  ░   ░     ░ ░       ░  ░  ░
+                           ░                                                                                      ░                
+
+[+]发送数据成功
+获取的历史漏洞总数： 100
+CVE漏洞编号： [+] ['CVE-2006-1352'] 
+
+CVE漏洞编号： [+] ['CVE-2006-0432'] 
+
+CVE漏洞编号： [+] ['CVE-2005-1743'] 
+
+CVE漏洞编号： [+] ['CVE-2006-0421'] 
+
+CVE漏洞编号： [+] ['CVE-2006-2467'] 
+
+CVE漏洞编号： [+] ['CVE-2007-2705'] 
+
+CVE漏洞编号： [+] ['CVE-2005-1742'] 
+
+CVE漏洞编号： [+] ['CVE-2006-0431'] 
+
+CVE漏洞编号： [+] ['CVE-2005-1749'] 
+
+CVE漏洞编号： [+] ['CVE-2008-0863'] 
+
+CVE漏洞编号： [+] ['CVE-2008-0895'] 
+
+CVE漏洞编号： [+] ['CVE-2018-2933'] 
+
+CVE漏洞编号： [+] ['CVE-2017-10352'] 
+
+CVE漏洞编号： [+] ['CVE-2019-2418'] 
+
+CVE漏洞编号： [+] ['CVE-2004-0711'] 
+
+CVE漏洞编号： [+] ['CVE-2005-4753'] 
+
+CVE漏洞编号： [+] ['CVE-2005-4758'] 
+
+CVE漏洞编号： [+] ['CVE-2005-4760'] 
+
+CVE漏洞编号： [+] ['CVE-2006-0424'] 
+
+CVE漏洞编号： [+] ['CVE-2006-0429'] 
+
+CVE漏洞编号： [+] ['CVE-2006-2468'] 
+
+CVE漏洞编号： [+] ['CVE-2006-2470'] 
+
+CVE漏洞编号： [+] ['CVE-2013-2390'] 
+
+CVE漏洞编号： [+] ['CVE-2017-10137'] 
+
+CVE漏洞编号： [+] ['CVE-2019-2568'] 
+
+CVE漏洞编号： [+] ['CVE-2004-1758'] 
+
+CVE漏洞编号： [+] ['CVE-2005-4754'] 
+
+CVE漏洞编号： [+] ['CVE-2005-4759'] 
+
+CVE漏洞编号： [+] ['CVE-2005-4761'] 
+
+CVE漏洞编号： [+] ['CVE-2005-4766'] 
+
+CVE漏洞编号： [+] ['CVE-2006-0420'] 
+
+CVE漏洞编号： [+] ['CVE-2008-3257'] 
+
+CVE漏洞编号： [+] ['CVE-2003-1220'] 
+
+CVE漏洞编号： [+] ['CVE-2004-0471'] 
+
+CVE漏洞编号： [+] ['CVE-2006-2469'] 
+
+CVE漏洞编号： [+] ['CVE-2007-2694'] 
+
+CVE漏洞编号： [+] ['CVE-2007-2699'] 
+
+CVE漏洞编号： [+] ['CVE-2014-6499'] 
+
+CVE漏洞编号： [+] ['CVE-2014-4253'] 
+
+CVE漏洞编号： [+] ['CVE-2003-1290'] 
+
+CVE漏洞编号： [+] ['CVE-2003-1226'] 
+
+CVE漏洞编号： [+] ['CVE-2005-4750'] 
+
+CVE漏洞编号： [+] ['CVE-2005-4762'] 
+
+CVE漏洞编号： [+] ['CVE-2005-4767'] 
+
+CVE漏洞编号： [+] ['CVE-2006-0419'] 
+
+CVE漏洞编号： [+] ['CVE-2006-0426'] 
+
+CVE漏洞编号： [+] ['CVE-2013-1504'] 
+
+CVE漏洞编号： [+] ['CVE-2004-2424'] 
+
+CVE漏洞编号： [+] ['CVE-2006-0422'] 
+
+CVE漏洞编号： [+] ['CVE-2006-0427'] 
+
+CVE漏洞编号： [+] ['CVE-2000-1238'] 
+
+CVE漏洞编号： [+] ['CVE-2005-4749'] 
+
+CVE漏洞编号： [+] ['CVE-2005-4756'] 
+
+CVE漏洞编号： [+] ['CVE-2010-0073'] 
+
+CVE漏洞编号： [+] ['CVE-2007-0417'] 
+
+CVE漏洞编号： [+] ['CVE-2003-1437'] 
+
+CVE漏洞编号： [+] ['CVE-2004-0652'] 
+
+CVE漏洞编号： [+] ['CVE-2005-4752'] 
+
+CVE漏洞编号： [+] ['CVE-2005-4757'] 
+
+CVE漏洞编号： [+] ['CVE-2005-4764'] 
+
+CVE漏洞编号： [+] ['CVE-2004-1756'] 
+
+CVE漏洞编号： [+] ['CVE-2006-0430'] 
+
+CVE漏洞编号： [+] ['CVE-2007-2700'] 
+
+CVE漏洞编号： [+] ['CVE-2004-0470'] 
+
+CVE漏洞编号： [+] ['CVE-2003-0733'] 
+
+CVE漏洞编号： [+] ['CVE-2007-0426'] 
+
+CVE漏洞编号： [+] ['CVE-2019-2395'] 
+
+CVE漏洞编号： [+] ['CVE-2018-2998'] 
+
+CVE漏洞编号： [+] ['CVE-2019-2891'] 
+
+CVE漏洞编号： [+] ['CVE-2017-3248'] 
+
+CVE漏洞编号： [+] ['CVE-2019-2856'] 
+
+CVE漏洞编号： [+] ['CVE-2004-0715'] 
+
+CVE漏洞编号： [+] ['CVE-2008-0869'] 
+
+CVE漏洞编号： [+] ['CVE-2017-3531'] 
+
+CVE漏洞编号： [+] [] 
+
+CVE漏洞编号： [+] ['CVE-2019-2889'] 
+
+CVE漏洞编号： [+] ['CVE-2017-10178'] 
+
+CVE漏洞编号： [+] ['CVE-2018-2987'] 
+
+CVE漏洞编号： [+] ['CVE-2019-2452'] 
+
+CVE漏洞编号： [+] ['CVE-2018-3250'] 
+
+CVE漏洞编号： [+] ['CVE-2018-2935'] 
+
+CVE漏洞编号： [+] [] 
+
+CVE漏洞编号： [+] ['CVE-2008-3257'] 
+
+CVE漏洞编号： [+] ['CVE-2017-10271'] 
+
+CVE漏洞编号： [+] ['CVE-2017-10334'] 
+
+CVE漏洞编号： [+] ['CVE-2018-3191'] 
+
+CVE漏洞编号： [+] ['CVE-2019-2645'] 
+
+CVE漏洞编号： [+] [] 
+
+CVE漏洞编号： [+] ['CVE-2000-0681'] 
+
+CVE漏洞编号： [+] ['CVE-2003-1224'] 
+
+CVE漏洞编号： [+] ['CVE-2004-1757'] 
+
+CVE漏洞编号： [+] ['CVE-2007-2698'] 
+
+CVE漏洞编号： [+] ['CVE-2008-0865'] 
+
+CVE漏洞编号： [+] ['CVE-2008-5459'] 
+
+CVE漏洞编号： [+] ['CVE-2010-0069'] 
+
+CVE漏洞编号： [+] ['CVE-2014-4242'] 
+
+CVE漏洞编号： [+] ['CVE-2015-0449'] 
+
+CVE漏洞编号： [+] ['CVE-2015-0482'] 
+
+CVE漏洞编号： [+] ['CVE-2016-5535'] 
+
+CVE漏洞编号： [+] ['CVE-2018-2628'] 
+
+#历史漏洞查询需求 shodan key
+</code></pre>
+<pre><code class="language-python">#! /usr/bin/env python3
+
+import requests
+import argparse
+import demjson
+
+#使用说明利用shodan 接口 查询历史cve上的漏洞组件信息
+#
+#
+#
+#pip install demjson json模块
+#pip install argparse 命令行模块
+#
+#by Greekn 
+
+print (&quot;&quot;&quot;
+
+  ██████  ██░ ██  ▒█████  ▓█████▄  ▄▄▄       ███▄    █ ▓█████ ▒██   ██▒ ██▓███    ██████ ▓█████ ▄▄▄       ██▀███   ▄████▄   ██░ ██ 
+▒██    ▒ ▓██░ ██▒▒██▒  ██▒▒██▀ ██▌▒████▄     ██ ▀█   █ ▓█   ▀ ▒▒ █ █ ▒░▓██░  ██▒▒██    ▒ ▓█   ▀▒████▄    ▓██ ▒ ██▒▒██▀ ▀█  ▓██░ ██▒
+░ ▓██▄   ▒██▀▀██░▒██░  ██▒░██   █▌▒██  ▀█▄  ▓██  ▀█ ██▒▒███   ░░  █   ░▓██░ ██▓▒░ ▓██▄   ▒███  ▒██  ▀█▄  ▓██ ░▄█ ▒▒▓█    ▄ ▒██▀▀██░
+  ▒   ██▒░▓█ ░██ ▒██   ██░░▓█▄   ▌░██▄▄▄▄██ ▓██▒  ▐▌██▒▒▓█  ▄  ░ █ █ ▒ ▒██▄█▓▒ ▒  ▒   ██▒▒▓█  ▄░██▄▄▄▄██ ▒██▀▀█▄  ▒▓▓▄ ▄██▒░▓█ ░██ 
+▒██████▒▒░▓█▒░██▓░ ████▓▒░░▒████▓  ▓█   ▓██▒▒██░   ▓██░░▒████▒▒██▒ ▒██▒▒██▒ ░  ░▒██████▒▒░▒████▒▓█   ▓██▒░██▓ ▒██▒▒ ▓███▀ ░░▓█▒░██▓
+▒ ▒▓▒ ▒ ░ ▒ ░░▒░▒░ ▒░▒░▒░  ▒▒▓  ▒  ▒▒   ▓▒█░░ ▒░   ▒ ▒ ░░ ▒░ ░▒▒ ░ ░▓ ░▒▓▒░ ░  ░▒ ▒▓▒ ▒ ░░░ ▒░ ░▒▒   ▓▒█░░ ▒▓ ░▒▓░░ ░▒ ▒  ░ ▒ ░░▒░▒
+░ ░▒  ░ ░ ▒ ░▒░ ░  ░ ▒ ▒░  ░ ▒  ▒   ▒   ▒▒ ░░ ░░   ░ ▒░ ░ ░  ░░░   ░▒ ░░▒ ░     ░ ░▒  ░ ░ ░ ░  ░ ▒   ▒▒ ░  ░▒ ░ ▒░  ░  ▒    ▒ ░▒░ ░
+░  ░  ░   ░  ░░ ░░ ░ ░ ▒   ░ ░  ░   ░   ▒      ░   ░ ░    ░    ░    ░  ░░       ░  ░  ░     ░    ░   ▒     ░░   ░ ░         ░  ░░ ░
+      ░   ░  ░  ░    ░ ░     ░          ░  ░         ░    ░  ░ ░    ░                 ░     ░  ░     ░  ░   ░     ░ ░       ░  ░  ░
+                           ░                                                                                      ░                
+&quot;&quot;&quot;
+)
+
+
+
+
+def shodan(args):
+	shodansearch = args.search
+	shodankey = args.key
+	try:
+		data = requests.get(&quot;https://exploits.shodan.io/api/search?query=&quot;+shodansearch+&quot;&amp;key=&quot;+shodankey+&quot;&quot;)
+		textdata = demjson.decode(data.text)
+		number = len(textdata[&quot;matches&quot;])
+		print(&quot;[+]发送数据成功&quot;)
+		print(&quot;获取的历史漏洞总数：&quot;,number)
+		for i in range(number):
+			print (&quot;CVE漏洞编号：&quot;,&quot;[+]&quot;,textdata[&quot;matches&quot;][i][&quot;cve&quot;],&quot;\n&quot;)
+            
+
+	except :
+		print(&quot;[-]发送数据失败&quot;)	
+                                                                                                                                           
+def main():
+	parser = argparse.ArgumentParser()
+	parser.description='shodan-exp-search'
+	parser.add_argument(&quot;-s&quot;,&quot;--search&quot;, help=&quot;shodan搜索&quot;,type=str,required=True)
+	parser.add_argument(&quot;-k&quot;,&quot;--key&quot;, help=&quot;填写key&quot;,type=str,required=True)
+	args = parser.parse_args()
+	shodan(args)
+
+
+if __name__== &quot;__main__&quot;:
+    main()
+
+ #漏洞查询脚本   
+</code></pre>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[攻击型安全公司思考]]></title>
         <id>https://wlaqtd.github.io/post/gong-ji-xing-an-quan-gong-si-si-kao/</id>
